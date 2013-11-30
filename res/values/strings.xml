@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Tomb Grader</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    
+    <!-- Category titles that correspond to the MainActivity button  -->
+    <string name="exams">Exams</string>
+    <string name="individual_assignments">Individual Assignments</string>
+    <string name="group_projects">Group Projects</string>
+    <string name="hw_quizzes_participation">Homework, Quizzes, Participation</string>
+
+
+</resources>
