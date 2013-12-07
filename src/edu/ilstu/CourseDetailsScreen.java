@@ -17,16 +17,15 @@ import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Description: Class that displays all the category details and dynamically
  * loads the respective content.
  * @author Rachel A Schifano, Corbin Sumner, John Boomgarden
- *
  */
 
 public class CourseDetailsScreen extends Activity {
@@ -71,17 +70,21 @@ public class CourseDetailsScreen extends Activity {
 		// check if course object is null
 		// if it is not, app will read the current XML file from memory
 		// if it is, app will read the default XML file
+
+		course = readCourseFile(XMLfile);
 		if (course == null){
 			System.out.println("Reading file from memory.");
 			course = getCourseXML();
 			
-			gradeItems = parseGradeItem(course, categoryName);
+			// gradeItems = parseGradeItem(course, categoryName);
 		}
 		else {
 			System.out.println("Reading default XML file.");
 		}
 		
 		// sets up the table to be used for the selected grade items
+		gradeItems = parseGradeItem(course, categoryName);
+		
 		TableLayout table = (TableLayout)findViewById(R.id.grade_table);
 		setTableRows(table, gradeItems);
 	}
@@ -103,7 +106,6 @@ public class CourseDetailsScreen extends Activity {
 			ex.printStackTrace();
 			System.out.println("Cannot read file.");
 		}
-	
 		return aCourse;
 	}
 	
@@ -199,7 +201,7 @@ public class CourseDetailsScreen extends Activity {
 	private void setTableRows(TableLayout table, ArrayList<GradeItem> rowItems) {
 		
 		
-		for( int i=0; i < rowItems.size(); i++){
+		for(int i=0; i < rowItems.size(); i++){
 			GradeItem item = rowItems.get(i);
 			TableRow row = new TableRow(this); // create table rows
 			TextView title = new TextView(this); // create new text
@@ -255,8 +257,17 @@ public class CourseDetailsScreen extends Activity {
 				}
 				
 				if (!fieldIsEmpty) {
-					if (score != 0.0 && id == R.id.actual)
-					{
+					// test for invalid negative number input
+					if (score < 0.0) {
+						Context context = getApplicationContext();
+						CharSequence text = "Invalid input.";
+						int duration = Toast.LENGTH_SHORT;
+
+						Toast toast = Toast.makeText(context, text, duration);
+						toast.show();
+						
+					}
+					else if (score != 0.0 && id == R.id.actual){
 						course.setEvaluatedPoints(itemName, score);
 					}
 					else if (score != 0.0 && id == R.id.estimated){

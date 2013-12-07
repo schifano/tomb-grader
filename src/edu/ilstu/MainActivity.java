@@ -1,6 +1,5 @@
 package edu.ilstu;
 
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,22 +15,22 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 /**
  * Description: MainActivity class that handles the main screen interaction on the Android device.
  * @author Rachel A Schifano, Corbin Sumner, John Boomgarden
- *
  */
 public class MainActivity extends Activity {
 
+	// create new course and XML instances for loading the file
 	Course course=null;
 	private String XMLfile = "course-226.xml";
 	
-	
+	/**
+	 * Method that reads the current course file when the MainAcitivity 
+	 * screen is loaded.
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,6 +44,9 @@ public class MainActivity extends Activity {
 		
 	}
 
+	/**
+	 * Method that generates the Android menu.
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -52,6 +54,11 @@ public class MainActivity extends Activity {
 		return true;
 	}
 	
+	/**
+	 * Method that calls the updated XML sheet and dynamically
+	 * generates the latest course performance on the screen once
+	 * the application resumes from a previous activity or state.
+	 */
 	@Override
 	protected void onResume(){
 		super.onResume();
@@ -61,47 +68,10 @@ public class MainActivity extends Activity {
 		if(course == null){
 			course = getCourseXML(); 
 		}
-		
-		//double performance = getPerformance();
-		
-		// print percent total
-		//String str = Double.toString(performance);
-		//Log.d("Total", str);
-		
-		// print percent score
-		/*double score = course.getPercentageScore();
-		String str2 = Double.toString(score);
-		Log.d("Score", str2); */
-		
-		
-		//String formattedPerf = String.format("%.2f", performance);
-		
+	
 		// Course Performance
 		TextView textView1 = (TextView) findViewById(R.id.course_performance);
 		textView1.setText(getPerformance(course));
-		
-		
-		
-		
-		/*
-		String str_score = Double.toString(score);
-		String formattedString1 = String.format("%.2f", score);
-		
-		// Exams Performance
-		
-		// Individual Assignments Performance
-		TextView textView3 = (TextView) findViewById(R.id.individual_assignments_perf);
-		textView3.setText(formattedString1);
-		
-		// Group Projects Performance
-		TextView textView5 = (TextView) findViewById(R.id.group_projects_perf);
-		textView5.setText(formattedString1);
-		
-		// Homework, Quizzes, Participation Performance
-		TextView textView8 = (TextView) findViewById(R.id.hw_quizzes_participation_perf);
-		textView8.setText(formattedString1); */
-		
-		
 	}
 	
 	/**
@@ -142,7 +112,6 @@ public class MainActivity extends Activity {
 		{
 			ex.printStackTrace();
 		}
-		
 		return readCourse;
 	}
 	
