@@ -38,10 +38,9 @@ public class MainActivity extends Activity {
 		
 		course = readCourseFile(XMLfile);
 		
-		if(course == null){
+		if (course == null) {
 			course = getCourseXML(); 
 		}
-		
 	}
 
 	/**
@@ -65,7 +64,7 @@ public class MainActivity extends Activity {
 	
 		course = readCourseFile(XMLfile);
 		
-		if(course == null){
+		if (course == null) {
 			course = getCourseXML(); 
 		}
 	
@@ -127,12 +126,10 @@ public class MainActivity extends Activity {
 			InputStream stream = getResources().getAssets().open(XMLfile);
 			aCourse = CourseXMLParser.readCourse(stream);
 			stream.close();
-		} catch(IOException ex)
-		{
+		} catch(IOException ex) {
 			ex.printStackTrace();
 			System.out.println("Cannot read file.");
 		}
-	
 		return aCourse;
 	}
 	
@@ -173,7 +170,6 @@ public class MainActivity extends Activity {
 	 * @param categoryName The string name for each category.
 	 */
 	private void loadCategory(String categoryName) {
-		
 		Intent i = new Intent(this, CourseDetailsScreen.class);
 		i.putExtra("category", categoryName);
 		startActivity(i);

@@ -34,7 +34,6 @@ public class CourseDetailsScreen extends Activity {
 	private Course course = null;
 	private String XMLfile = "course-226.xml";
 	private TextView myText = null;
-	
 	private ArrayList<EditText> editText;
 	
 	/**
@@ -77,8 +76,7 @@ public class CourseDetailsScreen extends Activity {
 			course = getCourseXML();
 			
 			// gradeItems = parseGradeItem(course, categoryName);
-		}
-		else {
+		} else {
 			System.out.println("Reading default XML file.");
 		}
 		
@@ -101,8 +99,7 @@ public class CourseDetailsScreen extends Activity {
 			InputStream stream = getResources().getAssets().open(XMLfile);
 			aCourse = CourseXMLParser.readCourse(stream);
 			stream.close();
-		} catch(IOException ex)
-		{
+		} catch(IOException ex) {
 			ex.printStackTrace();
 			System.out.println("Cannot read file.");
 		}
@@ -154,14 +151,11 @@ public class CourseDetailsScreen extends Activity {
 		FileOutputStream outputStream;
 		String xml = course.toXML();
 		
-		try 
-		{
+		try  {
 			outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
 			outputStream.write(xml.getBytes()); // 
 			outputStream.close();
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -176,18 +170,15 @@ public class CourseDetailsScreen extends Activity {
 		FileInputStream stream;
 		Course readCourse = null;
 		
-		try 
-		{
+		try {
 			file = new File(this.getFilesDir(), filename); // Android files directory
 			stream = new FileInputStream(file);
 			readCourse = CourseXMLParser.readCourse(stream);
 			stream.close();
 		}
-		catch (Exception ex)
-		{
+		catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		
 		return readCourse;
 	}
 	
@@ -200,8 +191,7 @@ public class CourseDetailsScreen extends Activity {
 	@SuppressWarnings("null")
 	private void setTableRows(TableLayout table, ArrayList<GradeItem> rowItems) {
 		
-		
-		for(int i=0; i < rowItems.size(); i++){
+		for (int i=0; i < rowItems.size(); i++) {
 			GradeItem item = rowItems.get(i);
 			TableRow row = new TableRow(this); // create table rows
 			TextView title = new TextView(this); // create new text
@@ -247,7 +237,6 @@ public class CourseDetailsScreen extends Activity {
 			EditText textField = editText.get(rowIndex);
 			
 			if (textField != null) {
-				
 				try {
 				input = textField.getText().toString();
 				score = Double.parseDouble(input);
@@ -255,7 +244,6 @@ public class CourseDetailsScreen extends Activity {
 				catch (Exception ex) {
 					fieldIsEmpty = true;
 				}
-				
 				if (!fieldIsEmpty) {
 					// test for invalid negative number input
 					if (score < 0.0) {
@@ -265,12 +253,11 @@ public class CourseDetailsScreen extends Activity {
 
 						Toast toast = Toast.makeText(context, text, duration);
 						toast.show();
-						
 					}
-					else if (score != 0.0 && id == R.id.actual){
+					else if (score != 0.0 && id == R.id.actual) {
 						course.setEvaluatedPoints(itemName, score);
 					}
-					else if (score != 0.0 && id == R.id.estimated){
+					else if (score != 0.0 && id == R.id.estimated) {
 						course.setEstimatedPoints(itemName, score);
 					}
 				}
@@ -278,6 +265,4 @@ public class CourseDetailsScreen extends Activity {
 		}
 		writeCourseFile(XMLfile, course);		
 	}
-	
-	
 }
